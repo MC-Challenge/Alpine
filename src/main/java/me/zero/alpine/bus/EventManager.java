@@ -24,7 +24,7 @@ public class EventManager implements EventBus {
      * their associated Listener instances. This reduces the amount of reflection calls
      * that would otherwise be required when subscribing a Listenable to the event bus.
      */
-    private final Map<Listenable, List<Listener>> SUBSCRIPTION_CACHE = new ConcurrentHashMap<>();
+    protected final Map<Listenable, List<Listener>> SUBSCRIPTION_CACHE = new ConcurrentHashMap<>();
 
     /**
      * Map containing all event classes and their corresponding listeners
@@ -89,7 +89,7 @@ public class EventManager implements EventBus {
      * @param field Field being checked
      * @return Whether or not the Field is valid
      */
-    private static boolean isValidField(Field field) {
+    public static boolean isValidField(Field field) {
         return field.isAnnotationPresent(EventHandler.class) && Listener.class.isAssignableFrom(field.getType());
     }
 
@@ -103,7 +103,7 @@ public class EventManager implements EventBus {
      * @param listenable Parent object
      * @param field Listener field
      */
-    private static Listener asListener(Listenable listenable, Field field) {
+    public static Listener asListener(Listenable listenable, Field field) {
         try {
             boolean accessible = field.isAccessible();
             field.setAccessible(true);
